@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About the Project — Skill Atlas</title>
+<meta name="description" content="Skill Atlas — match your skills to tech roles, find skill gaps and plan what to learn next.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0A24; --bg2:#151038; --surface:rgba(255,255,255,.045); --surface2:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.18);
+  --ink:#F3F0FF; --dim:#A9A3CC; --mute:#7B7499;
+  --coral:#FF7A59; --pink:#FF4D8D; --mint:#2EE6A8; --lav:#A78BFA; --sky:#5CC8FF; --sun:#FFC95C;
+  --grad:linear-gradient(135deg,#FF7A59 0%,#FF4D8D 100%);
+  --grad2:linear-gradient(135deg,#A78BFA 0%,#5CC8FF 100%);
+  --radius:18px; --shadow:0 20px 60px -20px rgba(0,0,0,.6);
+  --display:'Fraunces',Georgia,serif; --sans:'Sora',system-ui,-apple-system,Segoe UI,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+   radial-gradient(700px 500px at 85% -10%,rgba(255,77,141,.22),transparent 65%),
+   radial-gradient(650px 520px at -5% 35%,rgba(167,139,250,.20),transparent 65%),
+   radial-gradient(600px 500px at 60% 110%,rgba(46,230,168,.12),transparent 65%)}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(#000,transparent 85%);mask-image:linear-gradient(#000,transparent 85%)}
+::selection{background:rgba(255,77,141,.35)}
+a{color:var(--coral);text-decoration:none}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--coral);outline-offset:3px;border-radius:6px}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.serif{font-family:var(--display);font-weight:500;font-style:italic}
+
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(13,10,36,.7);border-bottom:1px solid var(--line)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:70px;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;color:var(--ink);font-weight:600;font-size:18px;letter-spacing:-.01em}
+.logo{width:36px;height:36px;border-radius:11px;background:var(--grad);display:grid;place-items:center;font:700 13px var(--sans);color:#fff;box-shadow:0 8px 24px -8px var(--pink);position:relative}
+.logo::after{content:'';position:absolute;inset:3px;border-radius:8px;border:1px solid rgba(255,255,255,.35)}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{color:var(--dim);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:500;transition:.2s}
+.nav-links a:hover{color:var(--ink);background:var(--surface)}
+.nav-links a.active{color:var(--ink);background:var(--surface2);box-shadow:inset 0 0 0 1px var(--line2)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.user-pill{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;color:var(--dim)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--grad2);display:grid;place-items:center;font-weight:700;font-size:12px;color:#0D0A24}
+.logout{background:none;border:1px solid var(--line2);color:var(--dim);font:500 13px var(--sans);padding:7px 14px;border-radius:999px;cursor:pointer;transition:.2s}
+.logout:hover{color:var(--ink);border-color:var(--coral)}
+.burger{display:none;background:var(--surface);border:1px solid var(--line2);color:var(--ink);width:40px;height:40px;border-radius:12px;cursor:pointer;font-size:18px}
+@media (max-width:900px){
+  .burger{display:block}
+  .nav-links{position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;padding:14px 20px 20px;background:rgba(13,10,36,.97);border-bottom:1px solid var(--line);display:none}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 16px}
+  .user-pill span{display:none}
+}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;font:600 14.5px var(--sans);padding:13px 24px;border-radius:999px;transition:transform .2s,box-shadow .2s,background .2s;color:#fff;text-decoration:none}
+.btn-primary{background:var(--grad);box-shadow:0 12px 30px -12px var(--pink)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px var(--pink)}
+.btn-ghost{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line2)}
+.btn-ghost:hover{background:var(--surface2);transform:translateY(-2px)}
+.btn-mint{background:var(--mint);color:#062A1F}
+.btn-mint:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px var(--mint)}
+.btn-sm{padding:8px 16px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+
+/* ---------- Generic ---------- */
+section{padding:84px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--coral);background:rgba(255,122,89,.1);border:1px solid rgba(255,122,89,.25);padding:6px 12px;border-radius:999px}
+.eyebrow.mint{color:var(--mint);background:rgba(46,230,168,.08);border-color:rgba(46,230,168,.25)}
+.eyebrow.lav{color:var(--lav);background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.28)}
+h1,h2,h3{letter-spacing:-.025em;line-height:1.1;margin:0}
+.h-xl{font-size:clamp(40px,6vw,76px);font-weight:700}
+.h-lg{font-size:clamp(32px,4.2vw,52px);font-weight:700}
+.h-md{font-size:24px;font-weight:600}
+.lead{font-size:17px;color:var(--dim);max-width:58ch}
+.section-head{text-align:center;max-width:720px;margin:0 auto 50px}
+.section-head .h-lg{margin:16px 0 14px}
+.section-head .lead{margin:0 auto}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;position:relative;transition:transform .25s,border-color .25s,background .25s}
+.card.hover:hover{transform:translateY(-4px);border-color:var(--line2);background:var(--surface2)}
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:980px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr} section{padding:60px 0}}
+.icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;margin-bottom:18px}
+.icon svg{width:24px;height:24px}
+.i-coral{background:rgba(255,122,89,.14);color:var(--coral)}
+.i-mint{background:rgba(46,230,168,.12);color:var(--mint)}
+.i-lav{background:rgba(167,139,250,.14);color:var(--lav)}
+.i-sky{background:rgba(92,200,255,.13);color:var(--sky)}
+.i-sun{background:rgba(255,201,92,.13);color:var(--sun)}
+.i-pink{background:rgba(255,77,141,.14);color:var(--pink)}
+.card h3{font-size:19px;font-weight:600;margin-bottom:8px}
+.card p{color:var(--dim);margin:0;font-size:14.5px}
+.tag{display:inline-block;font:500 11.5px var(--mono);padding:4px 10px;border-radius:999px;background:var(--surface2);color:var(--dim);border:1px solid var(--line)}
+.page-hero{padding:70px 0 30px;text-align:center}
+.page-hero .h-lg{margin:18px 0 14px}
+.page-hero .lead{margin:0 auto}
+
+/* ---------- Forms ---------- */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:500;color:var(--dim);margin-bottom:7px}
+.input,.select,.textarea{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--line2);color:var(--ink);padding:13px 15px;border-radius:12px;font:14.5px var(--sans);transition:border-color .2s,box-shadow .2s}
+.textarea{resize:vertical;min-height:120px}
+.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A9A3CC' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:40px}
+.select option{background:#1B1545;color:var(--ink)}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 4px rgba(255,122,89,.15)}
+.input::placeholder,.textarea::placeholder{color:var(--mute)}
+.input.invalid{border-color:var(--pink);box-shadow:0 0 0 4px rgba(255,77,141,.15)}
+.err{font-size:12.5px;color:var(--pink);margin-top:6px;display:none}
+.err.show{display:block}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--dim);cursor:pointer}
+.check input{accent-color:var(--coral);width:17px;height:17px;margin-top:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+
+/* ---------- Chips / bars ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line2);background:transparent;color:var(--ink);padding:7px 14px;border-radius:999px;font:13px var(--sans);cursor:pointer;transition:all .18s}
+.chip:hover{border-color:var(--coral);transform:translateY(-1px)}
+.chip.on{background:var(--grad);border-color:transparent;color:#fff;font-weight:600;box-shadow:0 6px 18px -6px var(--pink)}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;background:var(--grad);transition:width .7s cubic-bezier(.2,.7,.3,1)}
+.bar.mint>i{background:linear-gradient(90deg,#2EE6A8,#5CC8FF)}
+.bar.lav>i{background:var(--grad2)}
+
+/* ---------- Modal / toast ---------- */
+.overlay{position:fixed;inset:0;background:rgba(6,4,18,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;z-index:80}
+.overlay.open{display:flex}
+.modal{background:#191340;border:1px solid var(--line2);border-radius:22px;width:100%;max-width:620px;max-height:90vh;overflow:auto;padding:32px;box-shadow:var(--shadow);animation:pop .3s cubic-bezier(.2,.8,.3,1);position:relative}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);background:var(--surface);color:var(--ink);cursor:pointer;font-size:18px}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1E1750;border:1px solid var(--mint);color:var(--ink);padding:13px 22px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:90;max-width:92vw;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- Footer ---------- */
+.footer{border-top:1px solid var(--line);margin-top:40px;padding:48px 0 30px;color:var(--dim);font-size:14px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+@media (max-width:800px){.footer-grid{grid-template-columns:1fr 1fr}}
+.footer h4{color:var(--ink);font-size:14px;margin:0 0 14px;font-weight:600}
+.footer ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.footer a{color:var(--dim)}
+.footer a:hover{color:var(--coral)}
+.footer-bottom{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font:12px var(--mono);color:var(--mute)}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* ---- page ---- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.split .h-lg{margin:16px 0 16px}
+.problem{padding:34px;border-radius:24px;background:linear-gradient(150deg,rgba(255,77,141,.14),rgba(167,139,250,.08));border:1px solid var(--line2)}
+.problem q{display:block;font:italic 500 24px/1.4 var(--display);quotes:none;margin-bottom:18px}
+.problem small{color:var(--dim)}
+.formula{font:500 15px var(--mono);background:rgba(0,0,0,.3);border:1px solid var(--line2);border-radius:14px;padding:18px 20px;margin:18px 0;color:var(--ink);overflow-x:auto;white-space:nowrap}
+.formula span{color:var(--coral)}
+.obj{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.obj:last-child{border-bottom:0}
+.obj .n{font:600 13px var(--mono);color:var(--coral);width:28px;flex-shrink:0;padding-top:2px}
+.obj p{margin:0;color:var(--dim)}
+.obj b{color:var(--ink);display:block;margin-bottom:2px}
+.team{text-align:center;padding:30px 20px}
+.team .av{width:76px;height:76px;border-radius:22px;margin:0 auto 16px;display:grid;place-items:center;font-size:26px;font-weight:700;color:#0D0A24;transform:rotate(-4deg)}
+.team h3{font-size:17px;margin-bottom:4px}
+.team .reg{font:12px var(--mono);color:var(--dim)}
+.team .role-t{font-size:13px;color:var(--dim);margin-top:10px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+@media (max-width:1000px){.g5{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:600px){.g5{grid-template-columns:1fr 1fr}}
+.stack-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.stack-list span{padding:9px 16px;border-radius:12px;background:var(--surface2);border:1px solid var(--line);font-size:14px}
+.future{display:flex;gap:14px;align-items:flex-start}
+.future .icon{margin:0;flex-shrink:0;width:42px;height:42px}
+.info-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.info-bar div{padding:18px 20px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.info-bar small{display:block;color:var(--dim);font:11.5px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.info-bar b{font-size:15px}
+@media (max-width:800px){.info-bar{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="container">
+  <a class="brand" href="home.html"><div class="logo">SA</div>Skill Atlas</a>
+  <div class="nav-links" id="navLinks">
+    <a href="home.html">Home</a><a href="explore.html">Explore</a><a href="roles.html">Roles</a><a href="about.html">About</a><a href="enquiry.html">Enquiry</a>
+  </div>
+  <div class="nav-right"><div class="user-pill" id="userPill"></div><button class="logout" id="logoutBtn">Log out</button><button class="burger" id="burger" aria-label="Menu">☰</button></div>
+</div></nav>
+<div class="container">
+  <div class="page-hero reveal">
+    <span class="eyebrow lav">About the project</span>
+    <h1 class="h-lg">Turning a vague career question into <span class="serif grad-text">a clear skill path.</span></h1>
+    <p class="lead">Skill Atlas is an academic prototype built for CAP-205 Next Gen Computing at Lovely Professional University.</p>
+  </div>
+
+  <div class="info-bar reveal">
+    <div><small>Programme</small><b>BCA</b></div>
+    <div><small>Course</small><b>CAP-205</b></div>
+    <div><small>Group · Section</small><b>5 · D2501</b></div>
+    <div><small>University</small><b>LPU, Punjab</b></div>
+  </div>
+
+  <section>
+    <div class="split">
+      <div class="reveal">
+        <span class="eyebrow">The problem</span>
+        <h2 class="h-lg">Career advice is often too generic to act on.</h2>
+        <p class="lead">Students, career switchers and self-taught learners struggle to see which roles fit their current skills, what's missing for a role they want, and what to learn next. Skill Atlas answers all three — and shows its working.</p>
+      </div>
+      <div class="problem reveal">
+        <q>Which jobs fit my skills? What am I missing? What should I learn next?</q>
+        <small>The three questions Skill Atlas is designed to answer</small>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="grid g2">
+      <div class="card reveal">
+        <div class="icon i-coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+        <h3>Aim</h3>
+        <p>To develop and evaluate a transparent prototype that recommends suitable tech roles from a user's existing skills, identifies the important missing skills, and suggests related skills to learn next.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon i-mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div>
+        <h3>How scoring works</h3>
+        <p>Each role is a vector of skill weights (0–1). Your selection is a binary vector. The match is their cosine similarity:</p>
+        <div class="formula">match = <span>Σ</span> w<sub>s</sub> / ( ‖job‖ × √<span>n</span> )</div>
+        <p>Gaps are the role's skills you don't have, sorted by weight. Adjacent skills come from co-occurrence across all roles.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="split" style="align-items:start">
+      <div class="reveal">
+        <span class="eyebrow mint">Objectives</span>
+        <h2 class="h-lg">What we set out to build</h2>
+        <div class="stack-list"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Python</span><span>scikit-learn</span><span>TF-IDF</span><span>Cosine similarity</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="obj"><span class="n">01</span><div><b>Structured dataset</b><p>15 sample tech roles with weighted skill requirements.</p></div></div>
+        <div class="obj"><span class="n">02</span><div><b>Skill-based role matching</b><p>Rank every role against the selected skills.</p></div></div>
+        <div class="obj"><span class="n">03</span><div><b>Skill-gap analysis</b><p>Missing skills for the chosen role, by importance.</p></div></div>
+        <div class="obj"><span class="n">04</span><div><b>Adjacent skills</b><p>Related skills via co-occurrence signals.</p></div></div>
+        <div class="obj"><span class="n">05</span><div><b>Interactive website</b><p>Sample postings and a browser-only apply demo.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="section-head reveal">
+      <span class="eyebrow">The team</span>
+      <h2 class="h-lg">Group 5</h2>
+    </div>
+    <div class="g5">
+      <div class="card hover team reveal"><div class="av" style="background:var(--coral)">MG</div><h3>Madhav Gupta</h3><div class="reg">12507072</div><div class="role-t">Dataset & matching · Testing</div></div>
+      <div class="card hover team reveal"><div class="av" style="background:var(--lav)">VT</div><h3>Vansh Takkar</h3><div class="reg">12525441</div><div class="role-t">UI design</div></div>
+      <div class="card hover team reveal"><div class="av" style="background:var(--mint)">NA</div><h3>Namish Arora</h3><div class="reg">12525442</div><div class="role-t">UI design</div></div>
+      <div class="card hover team reveal"><div class="av" style="background:var(--sun)">AK</div><h3>Atul Kumar</h3><div class="reg">12518824</div><div class="role-t">Dataset & matching</div></div>
+      <div class="card hover team reveal"><div class="av" style="background:var(--sky)">A</div><h3>Aryan</h3><div class="reg">12507941</div><div class="role-t">Testing</div></div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="section-head reveal">
+      <span class="eyebrow lav">Future scope</span>
+      <h2 class="h-lg">Where Skill Atlas goes next</h2>
+    </div>
+    <div class="grid g3">
+      <div class="card reveal future"><div class="icon i-coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><h3>Real data</h3><p>Occupation taxonomies and live job feeds.</p></div></div>
+      <div class="card reveal future"><div class="icon i-lav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><div><h3>Skill embeddings</h3><p>Semantic matching so "JS" finds "javascript".</p></div></div>
+      <div class="card reveal future"><div class="icon i-mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div><div><h3>Resume parsing</h3><p>Pull skills automatically from a CV.</p></div></div>
+      <div class="card reveal future"><div class="icon i-sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div><h3>Personalisation</h3><p>Experience, pace, location and preferences.</p></div></div>
+      <div class="card reveal future"><div class="icon i-sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V3H6.5A2.5 2.5 0 004 5.5z"/></svg></div><div><h3>Learning links</h3><p>Courses and resources for each gap skill.</p></div></div>
+      <div class="card reveal future"><div class="icon i-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h3>Fairness review</h3><p>Bias audits before any real deployment.</p></div></div>
+    </div>
+  </section>
+</div>
+<footer class="footer"><div class="container">
+  <div class="footer-grid">
+    <div><a class="brand" href="home.html"><div class="logo">SA</div>Skill Atlas</a><p style="max-width:34ch;margin-top:14px">A transparent job skill recommendation engine. Academic prototype · synthetic dataset.</p></div>
+    <div><h4>Explore</h4><ul><li><a href="explore.html">Skill explorer</a></li><li><a href="roles.html">Role catalogue</a></li><li><a href="roles.html">Openings</a></li></ul></div>
+    <div><h4>Project</h4><ul><li><a href="about.html">About</a></li><li><a href="about.html">Team</a></li><li><a href="about.html">Future scope</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="enquiry.html">Send an enquiry</a></li><li><a href="index.html">Log in</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© <span id="yr"></span> Skill Atlas · Group 5 · BCA CAP-205 · LPU</span><span>15 roles · demo data only</span></div>
+</div></footer>
+<div class="toast" id="toast"></div>
+<script>
+// ===== Shared data (same synthetic dataset as the original Skill Atlas prototype) =====
+const JOBS = [
+  ["Data Scientist","Data & AI",{"python":1.0,"statistics":1.0,"machine learning":1.0,"sql":0.9,"pandas":0.9,"data visualization":0.7,"deep learning":0.6,"a/b testing":0.6,"communication":0.5}],
+  ["Machine Learning Engineer","Data & AI",{"python":1.0,"machine learning":1.0,"deep learning":0.9,"mlops":0.9,"docker":0.8,"cloud platforms":0.8,"sql":0.6,"software engineering":0.8,"kubernetes":0.6}],
+  ["AI Research Scientist","Data & AI",{"python":0.9,"deep learning":1.0,"research methodology":1.0,"pytorch":0.9,"mathematics":0.9,"academic writing":0.6,"machine learning":0.9,"statistics":0.7}],
+  ["Data Analyst","Data & AI",{"sql":1.0,"excel":0.9,"data visualization":0.9,"statistics":0.7,"python":0.6,"communication":0.7,"business acumen":0.6,"dashboarding":0.7}],
+  ["Backend Developer","Software Engineering",{"python":0.8,"sql":0.8,"api design":1.0,"software engineering":1.0,"databases":0.9,"docker":0.7,"cloud platforms":0.6,"system design":0.8,"testing":0.6}],
+  ["Frontend Developer","Software Engineering",{"javascript":1.0,"html/css":1.0,"react":0.9,"ui/ux principles":0.7,"software engineering":0.8,"testing":0.5,"accessibility":0.5,"api design":0.5}],
+  ["Full Stack Developer","Software Engineering",{"javascript":0.9,"python":0.7,"react":0.8,"api design":0.8,"databases":0.8,"software engineering":0.9,"html/css":0.7,"cloud platforms":0.6,"testing":0.6}],
+  ["DevOps Engineer","Infrastructure",{"docker":1.0,"kubernetes":1.0,"cloud platforms":1.0,"ci/cd":0.9,"linux":0.9,"scripting":0.8,"networking":0.6,"monitoring":0.7,"infrastructure as code":0.8}],
+  ["Cloud Architect","Infrastructure",{"cloud platforms":1.0,"system design":1.0,"networking":0.8,"security":0.8,"infrastructure as code":0.8,"kubernetes":0.6,"cost optimization":0.6,"communication":0.5}],
+  ["Cybersecurity Analyst","Infrastructure",{"security":1.0,"networking":0.9,"risk assessment":0.9,"incident response":0.9,"linux":0.6,"scripting":0.6,"compliance":0.7,"communication":0.5}],
+  ["Mobile Developer","Software Engineering",{"swift/kotlin":1.0,"mobile ui patterns":0.9,"api design":0.7,"software engineering":0.8,"testing":0.6,"ui/ux principles":0.6,"app store deployment":0.5}],
+  ["QA Engineer","Software Engineering",{"testing":1.0,"test automation":1.0,"sql":0.5,"software engineering":0.6,"scripting":0.6,"attention to detail":0.7,"ci/cd":0.5}],
+  ["Product Manager","Product",{"communication":1.0,"business acumen":0.9,"roadmapping":1.0,"data visualization":0.5,"stakeholder management":0.9,"user research":0.6,"sql":0.4,"agile methodology":0.7}],
+  ["UX Designer","Product",{"ui/ux principles":1.0,"user research":1.0,"wireframing":0.9,"prototyping":0.9,"communication":0.6,"accessibility":0.6,"visual design":0.7}],
+  ["Business Analyst","Product",{"business acumen":1.0,"sql":0.7,"data visualization":0.7,"communication":0.8,"stakeholder management":0.7,"excel":0.7,"process mapping":0.7}],
+];
+const FAMILIES = [...new Set(JOBS.map(j => j[1]))];
+const ALL_SKILLS = [...new Set(JOBS.flatMap(j => Object.keys(j[2])))].sort();
+const FAMILY_COLOR = {"Data & AI":"var(--coral)","Software Engineering":"var(--lav)","Infrastructure":"var(--mint)","Product":"var(--sun)"};
+
+// Fictional sample postings (demo only)
+const POSTINGS = {
+  "Data Scientist":[{company:"Nimbus Analytics",location:"Bengaluru, IN",type:"Hybrid"},{company:"Coral Peak Labs",location:"Remote",type:"Remote"}],
+  "Machine Learning Engineer":[{company:"Ferrous Systems Co.",location:"Pune, IN",type:"Onsite"},{company:"Latitude AI",location:"Remote",type:"Remote"}],
+  "AI Research Scientist":[{company:"Helix Research Group",location:"Bengaluru, IN",type:"Hybrid"},{company:"Quill & Vector Labs",location:"Remote",type:"Remote"}],
+  "Data Analyst":[{company:"Northbeam Retail",location:"Ludhiana, IN",type:"Onsite"},{company:"Pinecone Metrics",location:"Remote",type:"Remote"}],
+  "Backend Developer":[{company:"Ironclad Systems",location:"Gurugram, IN",type:"Hybrid"},{company:"Basecamp Freight",location:"Remote",type:"Remote"}],
+  "Frontend Developer":[{company:"Studio Lumen",location:"Chandigarh, IN",type:"Hybrid"},{company:"Verdant Retail Co.",location:"Remote",type:"Remote"}],
+  "Full Stack Developer":[{company:"Harborline Software",location:"Mohali, IN",type:"Onsite"},{company:"Fernwood Digital",location:"Remote",type:"Remote"}],
+  "DevOps Engineer":[{company:"Trellis Infrastructure",location:"Bengaluru, IN",type:"Hybrid"},{company:"Anchorpoint Cloud",location:"Remote",type:"Remote"}],
+  "Cloud Architect":[{company:"Anchorpoint Cloud",location:"Hyderabad, IN",type:"Hybrid"},{company:"Meridian Systems",location:"Remote",type:"Remote"}],
+  "Cybersecurity Analyst":[{company:"Ward & Bastion Security",location:"Gurugram, IN",type:"Onsite"},{company:"Sable Point Defense",location:"Remote",type:"Remote"}],
+  "Mobile Developer":[{company:"Pocketwave Apps",location:"Chandigarh, IN",type:"Hybrid"},{company:"Loopline Studio",location:"Remote",type:"Remote"}],
+  "QA Engineer":[{company:"Ironclad Systems",location:"Pune, IN",type:"Onsite"},{company:"Checksum Labs",location:"Remote",type:"Remote"}],
+  "Product Manager":[{company:"Northbeam Retail",location:"Bengaluru, IN",type:"Hybrid"},{company:"Fernwood Digital",location:"Remote",type:"Remote"}],
+  "UX Designer":[{company:"Studio Lumen",location:"Remote",type:"Remote"},{company:"Verdant Retail Co.",location:"Chandigarh, IN",type:"Hybrid"}],
+  "Business Analyst":[{company:"Meridian Systems",location:"Ludhiana, IN",type:"Onsite"},{company:"Pinecone Metrics",location:"Remote",type:"Remote"}],
+};
+
+// ===== Storage helpers (safe if storage is blocked) =====
+const store = {
+  get(k, d=null){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const titleCase = s => s.replace(/\b\w/g, c => c.toUpperCase());
+
+// ===== Nav: user pill, logout, burger, active link =====
+document.addEventListener('DOMContentLoaded', () => {
+  const user = store.get('sa_user');
+  const pill = document.getElementById('userPill');
+  if(pill){
+    const name = user && user.name ? user.name : 'Guest';
+    pill.innerHTML = `<div class="avatar">${esc(name.charAt(0).toUpperCase())}</div><span>${esc(name.split(' ')[0])}</span>`;
+  }
+  const lo = document.getElementById('logoutBtn');
+  if(lo) lo.addEventListener('click', () => { store.del('sa_user'); location.href = 'index.html'; });
+  const burger = document.getElementById('burger'), links = document.getElementById('navLinks');
+  if(burger) burger.addEventListener('click', () => links.classList.toggle('open'));
+  const page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(a => { if(a.getAttribute('href') === page) a.classList.add('active'); });
+  // scroll reveal
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12}) : null;
+  document.querySelectorAll('.reveal').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+  const yr = document.getElementById('yr'); if(yr) yr.textContent = new Date().getFullYear();
+});
+
+let _toastT;
+function toast(msg){
+  let t = document.getElementById('toast');
+  if(!t){ t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(_toastT); _toastT = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+</script>
+<script>
+
+</script>
+</body>
+</html>
